@@ -1,0 +1,269 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>zzb.log.INFO</title><description>logging.info([thought, stories, idea].join())</description><link>http://www.zlog.ml/</link><generator>Ghost 0.5</generator><lastBuildDate>Sun, 16 Aug 2015 06:14:35 GMT</lastBuildDate><atom:link href="http://www.zlog.ml/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Note: 公式</title><description>&lt;ul&gt;
+&lt;li&gt;cos similarity: &lt;br&gt;
+&lt;img src="http://www.zlog.ml/content/images/2015/08/QQ---1.jpg" alt="" title=""&gt;&lt;/li&gt;
+&lt;li&gt;tf-idf: &lt;br&gt;
+&lt;img src="http://image.beekka.com/blog/201303/bg2013031505.png" alt="" title=""&gt;
+&lt;img src="http://image.beekka.com/blog/201303/bg2013031506.png" alt="" title=""&gt;
+&lt;img src="http://image.beekka.com/blog/201303/bg2013031507.png" alt="" title=""&gt;
+&lt;a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html"&gt;http://www.ruanyifeng.com/blog/2013/03/tf-idf.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;相对熵/KL散度 (similarity of distribution): &lt;br&gt;
+對於离散隨機变量，其概率分布P 和 Q的KL散度可按下式定義為 &lt;br&gt;
+&lt;img src="https://upload.wikimedia.org/math/d/f/8/df8891749cf5217603e02356d5927184.png" alt="" title=""&gt; &lt;br&gt;
+即按概率P求得的P和Q的對數差的平均值。KL散度僅當概率P和Q各自總和均為1，且對於任何i皆滿足Q(i)&gt;0及P(i)&gt;0時，才有定義。式中出現0 ln 0的情況，其值按0處理。&lt;/li&gt;
+&lt;/ul&gt;</description><link>http://www.zlog.ml/note-gong-shi/</link><guid isPermaLink="false">16f4cbe8-5460-4a7a-951f-6bb2e8dcd7ef</guid><dc:creator>zhaoloving</dc:creator><pubDate>Sun, 16 Aug 2015 05:50:47 GMT</pubDate></item><item><title>C++拾遗</title><description>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Macros &lt;br&gt;
+&lt;code&gt;##&lt;/code&gt;是宏的连接符,而&lt;code&gt;#&lt;/code&gt;将参数转为字符串，&lt;code&gt;gcc -E&lt;/code&gt;展开宏定义，示例如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; vi test.cc
+#define SET_STR(obj, attr, value) \
+    obj.set_##attr(#value)
+#define GET(obj, attr) \
+    obj.get_##attr##_value()
+#define GET2(obj, attr) \
+    obj.attr()
+
+
+ClassA obj_a;
+SET_STR(obj_a, name, obj "a");
+GET(obj_a, name);
+GET2(obj_a, name);
+
+
+#undef SET_STR
+#undef GET
+
+
+&amp;gt; gcc -E test.cc
+ClassA obj_a;
+obj_a.set_name("ojb \"a\"");
+obj_a.get_name_value();
+obj_a.name();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;References:
+&lt;a href="http://stackoverflow.com/questions/13216423/error-pasting-and-red-does-not-give-a-valid-preprocessing-token"&gt;http://stackoverflow.com/questions/13216423/error-pasting-and-red-does-not-give-a-valid-preprocessing-token&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;CONST&lt;/strong&gt; imply &lt;strong&gt;internal linkage&lt;/strong&gt; in C++  &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Change&lt;/strong&gt;: A name of file scope that is explicitly declared const, and not explicitly declared extern, has internal linkage, while in C it would have external linkage &lt;br&gt;
+  &lt;strong&gt;Rationale&lt;/strong&gt;: Because const objects can be used as compile-time values in C++, this feature urges programmers to provide explicit initializer values for each const. This feature allows the user to put const objects in header files that are included in many compilation units.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;结论：&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;定义字符串常量时,&lt;code&gt;const char* kStr = '...'&lt;/code&gt;并不是const变量因而是external linkage
+&lt;ul&gt;&lt;li&gt;因此prefer &lt;code&gt;const char* const kStr&lt;/code&gt; 或者&lt;code&gt;const char[] kStr&lt;/code&gt;的写法&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;如果将常量定义于头文件，&lt;code&gt;const int kNum = 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;如果定义于cpp文件
+&lt;ul&gt;&lt;li&gt;header: &lt;code&gt;external const int kNum&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;cpp: &lt;code&gt;const int kNum = 1&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><link>http://www.zlog.ml/cshi-yi/</link><guid isPermaLink="false">cc5970dd-de92-48c8-9beb-2c526c652807</guid><dc:creator>zhaoloving</dc:creator><pubDate>Sun, 07 Jun 2015 15:19:49 GMT</pubDate></item><item><title>Note: Go Lang</title><description>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Basic&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;在 Go 中，首字母大写的名称是被导出的&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://tour.go-zh.org/basics/7"&gt;命名返回值&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;函数外的每个语句都必须以关键字开始（ var 、 func 、等等）， := 结构不能使用在函数外。&lt;/li&gt;
+&lt;li&gt;变量在定义时没有明确的初始化时会赋值为 零值 。&lt;/li&gt;
+&lt;li&gt;常量不能使用 := 语法定义。  &lt;code&gt;const Pi = 3.14&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Control Flow&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;&lt;p&gt;跟 for 一样， if 语句可以在条件之前执行一个简单的语句。由这个语句定义的变量的作用域仅在 if 范围之内。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if v := math.Pow(x, n); v &amp;lt; lim {
+    return v
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;defer 语句会延迟函数的执行直到函数返回, 按照后进先出的顺序调用被延迟的函数调用(栈)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func main() {
+    defer fmt.Println("world")
+    fmt.Println("hello")
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Complex
+&lt;ul&gt;&lt;li&gt;Go有指针 &lt;code&gt;nil&lt;/code&gt;  与 C 不同，Go 没有指针运算。&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Interface
+&lt;ul&gt;&lt;li&gt;不能对来自其他包的类型或基础类型定义方法&lt;/li&gt;
+&lt;li&gt;返回值拷贝？&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><link>http://www.zlog.ml/note-go-lang/</link><guid isPermaLink="false">1935b0fa-8dde-41ed-bdbd-56ff355658e6</guid><dc:creator>zhaoloving</dc:creator><pubDate>Wed, 27 May 2015 15:32:09 GMT</pubDate></item><item><title>Note: Python Cheatsheet</title><description>&lt;ul&gt;
+&lt;li&gt;Debugger
+&lt;ul&gt;&lt;li&gt;&lt;code&gt;import pdb&lt;/code&gt; &lt;code&gt;pdb.set_trace()&lt;/code&gt;-&gt;breakpoint
+&lt;ul&gt;&lt;li&gt;&lt;a href="https://www.ibm.com/developerworks/cn/linux/l-cn-pythondebugger/"&gt;Reference&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;IPython&lt;/li&gt;
+&lt;li&gt;Drawing
+&lt;ul&gt;&lt;li&gt;Vincent &lt;code&gt;pip install vincent&lt;/code&gt; &lt;br&gt;
+&lt;code&gt;import vincent
+vincent.core.initialize_notebook() 
+line = vincent.Line([3,5,2,7,9,1])
+line.display()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://nbviewer.ipython.org/github/mwaskom/seaborn/blob/master/examples/plotting_distributions.ipynb"&gt;Seaborn&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><link>http://www.zlog.ml/note-python-cheatsheet/</link><guid isPermaLink="false">cc9506e8-b411-44db-9497-e7c78b3fa264</guid><dc:creator>zhaoloving</dc:creator><pubDate>Wed, 22 Apr 2015 06:01:23 GMT</pubDate></item><item><title>Note: Develop on Mac</title><description>&lt;ul&gt;
+&lt;li&gt;boot2docker start/stop/ssh&lt;/li&gt;
+&lt;li&gt;IPython Notebook
+&lt;ul&gt;&lt;li&gt;&lt;a href="http://nbviewer.ipython.org/"&gt;Notebook render service for public repo, like github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;start local instance: ipython noteook
+&lt;ul&gt;&lt;li&gt;Web terminal included&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Bpython&lt;/strong&gt; interpreter &lt;code&gt;pip install bpython&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Python libraries&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;Bpython &lt;code&gt;bpython&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Sh &lt;code&gt;sh&lt;/code&gt;
+&lt;ul&gt;&lt;li&gt;&lt;code&gt;import command \n command.getoutput('ls')&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Vim&lt;/p&gt;
+
+&lt;ul&gt;&lt;li&gt;YCM
+&lt;ul&gt;&lt;li&gt;Configure .ycm&lt;em&gt;extra&lt;/em&gt;conf.py
+&lt;ul&gt;&lt;li&gt;&lt;code&gt;let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Valloric/ycmd/blob/master/cpp/ycm/.ycm_extra_conf.py"&gt;Demo config&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;-system&lt;/code&gt; &lt;code&gt;'/usr/include/c++/4.2.1'&lt;/code&gt; to header files&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><link>http://www.zlog.ml/note-develop-on-mac/</link><guid isPermaLink="false">a057d865-beaa-4bb9-9c99-2086f26284a1</guid><dc:creator>zhaoloving</dc:creator><pubDate>Wed, 22 Apr 2015 06:01:09 GMT</pubDate></item><item><title>Notes: Git</title><description>&lt;p&gt;Git最容易引起误解的概念：Index(cache/stage)。&lt;/p&gt;
+
+&lt;p&gt;大部分误解来源于&lt;code&gt;git add&lt;/code&gt; &lt;code&gt;git status&lt;/code&gt;这两个命令，如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; git status
+Changes to be committed:
+
+  (use "git rm --cached &amp;lt;file&amp;gt;..." to unstage)
+        new file:   newfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;于是顺理成章的，Index的内容就是newfile了，也就是执行&lt;code&gt;git add&lt;/code&gt;时的&lt;strong&gt;delta&lt;/strong&gt;值。&lt;/p&gt;
+
+&lt;p&gt;其实不然，Index是指当前snapshot的文件&lt;strong&gt;全集&lt;/strong&gt;，而commit操作即将当前snapshot存为tree object进object database而已。&lt;/p&gt;
+
+&lt;p&gt;回头看看&lt;code&gt;git rm&lt;/code&gt;的定义： &lt;br&gt;
+&lt;code&gt;git-rm - Remove files from the working tree and from the index&lt;/code&gt; &lt;br&gt;
+于是，&lt;code&gt;git rm&lt;/code&gt;是指从object tree里删除文件，而不单单是不再track文件。&lt;/p&gt;
+
+&lt;p&gt;For more, check out &lt;a href="https://www.kernel.org/pub/software/scm/git/docs/user-manual.html#the-index"&gt;Git Manual&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以上。&lt;/p&gt;
+
+&lt;h1 id="references"&gt;References&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html"&gt;图解Git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://pcottle.github.io/learnGitBranching/"&gt;Git Gaming&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf"&gt;Cheatsheet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="points"&gt;Points&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;checkout vs reset
+&lt;ul&gt;&lt;li&gt;checkout: 只改变Head&lt;/li&gt;
+&lt;li&gt;reset: 改变Head+当前分支引用&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;merge vs rebase
+&lt;ul&gt;&lt;li&gt;merge: 存在分支&lt;/li&gt;
+&lt;li&gt;rebase: 分支线性合并&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;git rm
+&lt;ul&gt;&lt;li&gt;git rm &lt;file&gt;: 从index+working tree删除
+&lt;ul&gt;&lt;li&gt;status: &lt;file&gt; deleted&lt;/file&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/file&gt;&lt;/li&gt;
+&lt;li&gt;git rm --cache &lt;file&gt;: 只从index删除&lt;/file&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="usefulcommands"&gt;Useful Commands&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Diff
+&lt;img src="https://marklodato.github.io/visual-git-guide/diff.svg" alt=""&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><link>http://www.zlog.ml/note-git/</link><guid isPermaLink="false">940bcde9-da4a-422d-b259-24bc95d260ea</guid><category>git</category><category>programming</category><dc:creator>zhaoloving</dc:creator><pubDate>Sun, 19 Apr 2015 11:53:04 GMT</pubDate></item><item><title>Notes: Introduction to Data Mining</title><description>&lt;p&gt;&lt;img src="http://img3.douban.com/lpic/s1719794.jpg" alt=""&gt;&lt;/p&gt;</description><link>http://www.zlog.ml/notes-introduction-to-data-mining/</link><guid isPermaLink="false">eef61ed7-723c-4b26-b351-8d84c4eebf97</guid><dc:creator>zhaoloving</dc:creator><pubDate>Sat, 18 Apr 2015 13:44:22 GMT</pubDate></item><item><title>First blog for test(中文标题)</title><description>&lt;h1 id="thisisatitle"&gt;This is a title&lt;/h1&gt;
+
+&lt;img src="http://www.zlog.ml/content/images/2015/04/7768a88agw1ea0v6bmxpej20c80lp0sv.jpg" alt="First blog for test(中文标题)"&gt;&lt;p&gt;Then a image for test&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://www.zlog.ml/content/images/2015/04/avatar.jpg" alt="First blog for test(中文标题)"&gt;&lt;/p&gt;
+
+&lt;h1 id="notes"&gt;Notes&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Apple
+&lt;ul&gt;&lt;li&gt;fds
+&lt;ul&gt;&lt;li&gt;fdas&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;mark&gt;fdsafdsafdsa fdsafads&lt;/mark&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;fdasfsafdsafsad&lt;/p&gt;
+  
+  &lt;blockquote&gt;
+    &lt;p&gt;fdsafdas&lt;/p&gt;
+    
+    &lt;blockquote&gt;
+      &lt;p&gt;fdasfsd&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id="chinesesupport"&gt;Chinese support&lt;/h2&gt;
+
+&lt;p&gt;中文测试&lt;/p&gt;
+
+&lt;p&gt;一大段中文一大段中文一大段中文一大段中文一大段中文一大段中文一大段中文一大段中文一大段中文一大段中文一大段中文一大段中文&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;if () {} /* 又是中文 */&lt;/code&gt;&lt;/p&gt;</description><link>http://www.zlog.ml/first-blog-for-test/</link><guid isPermaLink="false">419cfc7c-853c-4702-b1fa-91cb0bb1b71c</guid><category>c++</category><dc:creator>zhaoloving</dc:creator><pubDate>Fri, 17 Apr 2015 16:17:56 GMT</pubDate></item><item><title>Welcome to Ghost</title><description>&lt;p&gt;You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you started. You can manage your content by signing in to the admin area at &lt;code&gt;&amp;lt;your blog URL&amp;gt;/ghost/&lt;/code&gt;. When you arrive, you can select this post from a list on the left and see a preview of it on the right. Click the little pencil icon at the top of the preview to edit this post and read the next section!&lt;/p&gt;
+
+&lt;h2 id="gettingstarted"&gt;Getting Started&lt;/h2&gt;
+
+&lt;p&gt;Ghost uses something called Markdown for writing. Essentially, it's a shorthand way to manage your post formatting as you write!&lt;/p&gt;
+
+&lt;p&gt;Writing in Markdown is really easy. In the left hand panel of Ghost, you simply write as you normally would. Where appropriate, you can use &lt;em&gt;shortcuts&lt;/em&gt; to &lt;strong&gt;style&lt;/strong&gt; your content. For example, a list:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Item number one&lt;/li&gt;
+&lt;li&gt;Item number two
+&lt;ul&gt;&lt;li&gt;A nested item&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;A final item&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;or with numbers!&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remember to buy some milk  &lt;/li&gt;
+&lt;li&gt;Drink the milk  &lt;/li&gt;
+&lt;li&gt;Tweet that I remembered to buy the milk, and drank it&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id="links"&gt;Links&lt;/h3&gt;
+
+&lt;p&gt;Want to link to a source? No problem. If you paste in a URL, like &lt;a href="http://ghost.org"&gt;http://ghost.org&lt;/a&gt; - it'll automatically be linked up. But if you want to customise your anchor text, you can do that too! Here's a link to &lt;a href="http://ghost.org"&gt;the Ghost website&lt;/a&gt;. Neat.&lt;/p&gt;
+
+&lt;h3 id="whataboutimages"&gt;What about Images?&lt;/h3&gt;
+
+&lt;p&gt;Images work too! Already know the URL of the image you want to include in your article? Simply paste it in like this to make it show up:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ghost.org/images/ghost.png" alt="The Ghost Logo"&gt;&lt;/p&gt;
+
+&lt;p&gt;Not sure which image you want to use yet? That's ok too. Leave yourself a descriptive placeholder and keep writing. Come back later and drag and drop the image in to upload:&lt;/p&gt;
+
+&lt;h3 id="quoting"&gt;Quoting&lt;/h3&gt;
+
+&lt;p&gt;Sometimes a link isn't enough, you want to quote someone on what they've said. It was probably very wisdomous. Is wisdomous a word? Find out in a future release when we introduce spellcheck! For now - it's definitely a word.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Wisdomous - it's definitely a word.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id="workingwithcode"&gt;Working with Code&lt;/h3&gt;
+
+&lt;p&gt;Got a streak of geek? We've got you covered there, too. You can write inline &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; blocks really easily with back ticks. Want to show off something more comprehensive? 4 spaces of indentation gets you there.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.awesome-thing {
+    display: block;
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="readyforabreak"&gt;Ready for a Break?&lt;/h3&gt;
+
+&lt;p&gt;Throw 3 or more dashes down on any new line and you've got yourself a fancy new divider. Aw yeah.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h3 id="advancedusage"&gt;Advanced Usage&lt;/h3&gt;
+
+&lt;p&gt;There's one fantastic secret about Markdown. If you want, you can write plain old HTML and it'll still work! Very flexible.&lt;/p&gt;
+
+&lt;p&gt;&lt;input type="text" placeholder="I'm an input field!"&gt;&lt;/p&gt;
+
+&lt;p&gt;That should be enough to get you started. Have fun - and let us know what you think :)&lt;/p&gt;</description><link>http://www.zlog.ml/welcome-to-ghost/</link><guid isPermaLink="false">73197e10-c98d-4d82-810e-b93a3056aeb9</guid><category>Getting Started</category><dc:creator>zhaoloving</dc:creator><pubDate>Fri, 17 Apr 2015 16:12:40 GMT</pubDate></item></channel></rss>

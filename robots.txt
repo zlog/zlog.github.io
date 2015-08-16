@@ -1,0 +1,3 @@
+User-agent: *
+Sitemap: http://www.zlog.ml/sitemap.xml
+Disallow: /ghost/
